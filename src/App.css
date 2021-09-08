@@ -1,38 +1,149 @@
+* {
+  font-family: "Roboto", sans-serif;
+}
 .App {
   text-align: center;
 }
+h1 {
+  color: #199afc;
+}
+.form {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-gap: 10px;
+  margin: 10px;
+  padding: 0 100px;
+  grid-template-areas:
+    "title . . . ."
+    "summary summary . tags tags"
+    "content content content content content"
+    "content content content content content"
+    "content content content content content"
+    "content content content content content"
+    "author . . . submit";
+}
 
-.App-logo {
-  height: 40vmin;
+.form-title {
+  grid-area: title;
+}
+.form-summary {
+  grid-area: summary;
+  padding: 5px;
+  font-size: 16px;
+}
+.form-tags {
+  grid-area: tags;
+}
+.form-content {
+  grid-area: content;
+  height: 600px;
+}
+.form-author {
+  grid-area: author;
+}
+.form-submit {
+  grid-area: submit;
+}
+
+.field-border {
+  border: 1px solid rgb(47, 44, 212);
+  border-radius: 5px;
+  padding: 10px;
+}
+.form-summary-textarea {
+  position: relative;
+  width: 100%;
+  border: none;
+  resize: none;
+  font-size: 14px;
+}
+.form-summary-textarea:focus {
+  outline: none;
+}
+.form-author-input {
+  position: relative;
+  width: 100%;
+  border: none;
+  resize: none;
+  font-size: 14px;
+}
+.form-author-input:focus {
+  outline: none;
+}
+.form-content-textarea {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border: none;
+  resize: none;
+  font-size: 16px;
+}
+.form-content-textarea:focus {
+  outline: none;
+}
+.form-title-input {
+  position: relative;
+  width: 100%;
+  border: none;
+  resize: none;
+  font-size: 14px;
+}
+.form-title-input:focus {
+  outline: none;
+}
+.form-submit-button {
+  background-color: rgb(47, 44, 212);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+  width: 100%;
+  height: 50px;
+}
+.form-submit-button:hover {
+  background-color: rgb(47, 44, 212);
+}
+.form-submit-button:focus {
+  outline: none;
+}
+/* make button disabled and spinning */
+.form-submit-button.disabled {
+  background-color: rgb(47, 44, 212);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+  width: 100%;
+  height: 50px;
+  opacity: 0.5;
   pointer-events: none;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.form-submit-button.disabled:hover {
+  background-color: rgb(47, 44, 212);
+}
+.form-submit-button.disabled:focus {
+  outline: none;
+}
+.form-submit-button.disabled:before {
+  content: "";
+  display: block;
+  width: 20px;
+  height: 20px;
+  margin: 0 auto;
+  border-radius: 50%;
+  border: 5px solid white;
+  border-top: 5px solid rgb(47, 44, 212);
+  animation: spin 1.2s linear infinite;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
+/* make spinner */
+@keyframes spin {
+  0% {
     transform: rotate(0deg);
   }
-  to {
+  100% {
     transform: rotate(360deg);
   }
 }
