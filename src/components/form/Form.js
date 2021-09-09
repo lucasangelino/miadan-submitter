@@ -1,18 +1,21 @@
 import * as React from "react";
 
 const initialState = "idle";
-const state = {
-  isIdle: "idle",
-  isSanitizating: "sanitizando",
-  isSubmitting: "submitting",
-};
 
 const Form = () => {
   const [state, setState] = React.useState(initialState);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setState(state.isSubmitting);
+    console.log("submitting");
+    console.log(state);
+  };
+
   return (
     <>
       <h1>Publicador</h1>
-      <div className="form">
+      <form className="form" onSubmit={handleSubmit} id="form">
         <div className="form-title field-border">
           <input
             className="form-title-input"
@@ -24,7 +27,7 @@ const Form = () => {
           <textarea
             className="form-summary-textarea"
             type="text"
-            placeholder="Resumen"
+            placeholder=""
           />
         </div>
         <div className="form-tags field-border">
@@ -50,6 +53,8 @@ const Form = () => {
         </div>
         <div className="form-submit field-border">
           <button
+            type="submit"
+            form="form"
             className={`form-submit-button ${
               state.isSanitizating || state.isSubmitting ? "isSubmitting" : ""
             }`}
@@ -61,51 +66,7 @@ const Form = () => {
               : "Publicar"}
           </button>
         </div>
-      </div>
-
-      {/* <form>
-        <div className="form-group">
-          <label htmlFor="author">Author</label>
-          <input
-            type="text"
-            className="form-control"
-            id="author_Input"
-            aria-describedby="authorHelp"
-            placeholder="Enter author"
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="exampleInputPassword1">title</label>
-          <input
-            type="password"
-            className="form-control"
-            id="exampleInputPassword1"
-            placeholder="Password"
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="exampleInputPassword1">Password</label>
-          <input
-            type="password"
-            className="form-control"
-            id="exampleInputPassword1"
-            placeholder="Password"
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="exampleInputPassword1">Password</label>
-          <input
-            type="password"
-            className="form-control"
-            id="exampleInputPassword1"
-            placeholder="Password"
-          />
-        </div>
-
-        <button type="submit" className="btn btn-primary">
-          Submit
-        </button>
-      </form> */}
+      </form>
     </>
   );
 };
