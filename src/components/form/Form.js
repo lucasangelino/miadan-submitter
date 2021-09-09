@@ -1,9 +1,17 @@
-import React from "react";
+import * as React from "react";
+
+const initialState = "idle";
+const state = {
+  isIdle: "idle",
+  isSanitizating: "sanitizando",
+  isSubmitting: "submitting",
+};
 
 const Form = () => {
+  const [state, setState] = React.useState(initialState);
   return (
     <>
-      <h1>Maidan Submitter</h1>
+      <h1>Publicador</h1>
       <div className="form">
         <div className="form-title field-border">
           <input
@@ -19,7 +27,13 @@ const Form = () => {
             placeholder="Resumen"
           />
         </div>
-        <div className="form-tags field-border">Tags</div>
+        <div className="form-tags field-border">
+          <textarea
+            className="form-summary-textarea"
+            type="text"
+            placeholder="Tags separadas por coma y sin comillas: React, Js, PHP"
+          />
+        </div>
         <div className="form-content field-border">
           <textarea
             className="form-content-textarea"
@@ -35,7 +49,17 @@ const Form = () => {
           />
         </div>
         <div className="form-submit field-border">
-          <button className="form-submit-button disabled"></button>
+          <button
+            className={`form-submit-button ${
+              state.isSanitizating || state.isSubmitting ? "isSubmitting" : ""
+            }`}
+          >
+            {state.isSanitizating
+              ? "Sanitizando..."
+              : state.isSubmitting
+              ? "Submitiendo"
+              : "Publicar"}
+          </button>
         </div>
       </div>
 
