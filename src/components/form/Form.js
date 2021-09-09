@@ -1,15 +1,20 @@
 import * as React from "react";
 
-const initialState = "idle";
-
 const Form = () => {
-  const [state, setState] = React.useState(initialState);
+  const [state, setState] = React.useState({
+    isIdle: true,
+    isSanitizating: false,
+    isSubmitting: false,
+    isSubmitted: false,
+  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setState(state.isSubmitting);
-    console.log("submitting");
-    console.log(state);
+    console.log("Submitting form...");
+    setTimeout(() => {
+      setState(state.isSubmitted);
+    }, 2000);
   };
 
   return (
@@ -27,7 +32,7 @@ const Form = () => {
           <textarea
             className="form-summary-textarea"
             type="text"
-            placeholder=""
+            placeholder="Resumen del contenido del articulo"
           />
         </div>
         <div className="form-tags field-border">
@@ -56,7 +61,11 @@ const Form = () => {
             type="submit"
             form="form"
             className={`form-submit-button ${
-              state.isSanitizating || state.isSubmitting ? "isSubmitting" : ""
+              state.isSanitizating
+                ? "is-sanitizing"
+                : state.isSubmitting
+                ? "is-submitting"
+                : ""
             }`}
           >
             {state.isSanitizating
