@@ -134,6 +134,17 @@ h1 {
   border-top: 5px solid rgb(47, 44, 212);
   animation: spin 1.2s linear infinite;
 }
+.form-error {
+  color: #fff;
+  background-color: #f44336;
+  padding: 5px;
+  border-radius: 5px;
+  margin: 5px;
+  width: 300px;
+  text-align: center;
+  position: absolute;
+  right: 6rem;
+}
 
 /* make spinner */
 @keyframes spin {
