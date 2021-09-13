@@ -11,7 +11,12 @@ async function postArticle(args) {
     method: "POST",
     body: JSON.stringify(params),
   };
-  return await fetch(`${"http://localhost:5001"}/api/article`, options);
+  const response = await fetch(
+    `${"http://localhost:5001"}/api/article`,
+    options
+  );
+  const json = await response.json();
+  return json;
 }
 
 export { postArticle };
