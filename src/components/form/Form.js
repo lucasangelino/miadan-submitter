@@ -2,6 +2,9 @@ import * as React from "react";
 import { postArticle } from "../../api/postArticle";
 
 const Form = () => {
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [hasError, setHasError] = React.useState(false);
+  const [errorMessage, setErrorMessage] = React.useState("");
   const [state, setState] = React.useState({
     title: "",
     summary: "",
@@ -9,17 +12,20 @@ const Form = () => {
     content: "",
     author: "",
   });
-  const [isLoading, setIsLoading] = React.useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    const response = await postArticle(state);
+    const { code, message } = await postArticle(state);
     setIsLoading(false);
-    console.log(response);
+    if (code !== 201) {
+      setHasError(true);
+      setErrorMessage(message);
+    }
   };
 
   const handleChange = (e) => {
+    setHasError(false);
     setState({
       ...state,
       [e.target.name]: e.target.value,
@@ -85,6 +91,18 @@ const Form = () => {
           </button>
         </div>
       </form>
+      <div>
+        {hasError && (
+          <div className="form-error">
+            <p>
+              <span role="img" aria-label="error">
+                🚫
+              </span>{" "}
+              {`Error al publicar el articulo ${errorMessage}`}
+            </p>
+          </div>
+        )}
+      </div>
     </>
   );
 };

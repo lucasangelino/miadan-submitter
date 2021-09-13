@@ -1,5 +1,4 @@
 async function postArticle(args) {
-  console.log(args);
   const params = {
     title: args.title,
     summary: args.summary,
@@ -9,6 +8,9 @@ async function postArticle(args) {
   };
   const options = {
     method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify(params),
   };
   const response = await fetch(
