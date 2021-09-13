@@ -1,20 +1,29 @@
 import * as React from "react";
+import { postArticle } from "../../api/postArticle";
 
 const Form = () => {
   const [state, setState] = React.useState({
-    isIdle: true,
-    isSanitizating: false,
-    isSubmitting: false,
-    isSubmitted: false,
+    title: "",
+    summary: "",
+    tags: [],
+    content: "",
+    author: "",
   });
+  const [isLoading, setIsLoading] = React.useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setState(state.isSubmitting);
-    console.log("Submitting form...");
-    setTimeout(() => {
-      setState(state.isSubmitted);
-    }, 2000);
+    setIsLoading(true);
+    const response = await postArticle(state);
+    setIsLoading(false);
+    console.log(response);
+  };
+
+  const handleChange = (e) => {
+    setState({
+      ...state,
+      [e.target.name]: e.target.value,
+    });
   };
 
   return (
@@ -26,6 +35,8 @@ const Form = () => {
             className="form-title-input"
             type="text"
             placeholder="Titulo de Articulo"
+            name="title"
+            onChange={handleChange}
           />
         </div>
         <div className="form-summary field-border">
@@ -33,6 +44,8 @@ const Form = () => {
             className="form-summary-textarea"
             type="text"
             placeholder="Resumen del contenido del articulo"
+            name="summary"
+            onChange={handleChange}
           />
         </div>
         <div className="form-tags field-border">
@@ -40,6 +53,8 @@ const Form = () => {
             className="form-summary-textarea"
             type="text"
             placeholder="Tags separadas por coma y sin comillas: React, Js, PHP"
+            name="tags"
+            onChange={handleChange}
           />
         </div>
         <div className="form-content field-border">
@@ -47,6 +62,8 @@ const Form = () => {
             className="form-content-textarea"
             type="text"
             placeholder="Contenido MARKDOWN"
+            name="content"
+            onChange={handleChange}
           />
         </div>
         <div className="form-author field-border">
@@ -54,25 +71,17 @@ const Form = () => {
             className="form-author-input"
             type="text"
             placeholder="Creador"
+            name="author"
+            onChange={handleChange}
           />
         </div>
         <div className="form-submit field-border">
           <button
             type="submit"
             form="form"
-            className={`form-submit-button ${
-              state.isSanitizating
-                ? "is-sanitizing"
-                : state.isSubmitting
-                ? "is-submitting"
-                : ""
-            }`}
+            className={`form-submit-button ${isLoading ? "isSubmitting" : ""}`}
           >
-            {state.isSanitizating
-              ? "Sanitizando..."
-              : state.isSubmitting
-              ? "Submitiendo"
-              : "Publicar"}
+            {isLoading ? "" : "Publicar"}
           </button>
         </div>
       </form>
